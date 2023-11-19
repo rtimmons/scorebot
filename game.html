@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--
+browser-sync start --server --files "*.html, *.css"
+-->
+<html lang="en">
+<head><title>Game</title>
+<style>
+    * {
+        font-family: courier, monospace;
+    }
+    table.console.active button {
+        background-color: #efe;
+    }
+    table.console:not(.active) button {
+        background-color: #000;
+    }
+    table.console {
+        border-width: 3px;
+        float: left;
+        margin: 0.5em;
+    }
+    .player1 {
+        color: #C00;
+        border-color: #C00;
+    }
+    .player2 {
+        color: #03C;
+        border-color: #03C;
+    }
+    .player3 {
+        color: #0C0;
+        border-color: #0C0;
+    }
+    .player4 {
+        color: #F3C;
+        border-color: #F3C;
+    }
+</style>
+</head>
+
+<body>
+
+<table border="1" class="console player1">
+    <tr>
+        <td>
+            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+        </td>
+        <td style="text-align: center">
+            <button class="plus1" style="width:3em">+1</button><br>
+            <button class="plus5" style="width:3em">+5</button><br>
+            <button class="clear" style="width:3em">0</button><br>
+            <span class="active">T</span><br>
+            <button class="commit" style="width:3em">OK</button><br>
+        </td>
+    </tr>
+</table>
+
+<table border="1" class="console player2">
+    <tr>
+        <td>
+            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+        </td>
+        <td style="text-align: center">
+            <button class="plus1" style="width:3em">+1</button><br>
+            <button class="plus5" style="width:3em">+5</button><br>
+            <button class="clear" style="width:3em">0</button><br>
+            <span class="active">T</span><br>
+            <button class="commit" style="width:3em">OK</button><br>
+        </td>
+    </tr>
+</table>
+
+<table border="1" class="console player3">
+    <tr>
+        <td>
+            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+        </td>
+        <td style="text-align: center">
+            <button class="plus1" style="width:3em">+1</button><br>
+            <button class="plus5" style="width:3em">+5</button><br>
+            <button class="clear" style="width:3em">0</button><br>
+            <span class="active">T</span><br>
+            <button class="commit" style="width:3em">OK</button><br>
+        </td>
+    </tr>
+</table>
+
+<table border="1" class="console player4">
+    <tr>
+        <td>
+            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+        </td>
+        <td style="text-align: center">
+            <button class="plus1" style="width:3em">+1</button><br>
+            <button class="plus5" style="width:3em">+5</button><br>
+            <button class="clear" style="width:3em">0</button><br>
+            <span class="active">T</span><br>
+            <button class="commit" style="width:3em">OK</button><br>
+        </td>
+        </td>
+    </tr>
+</table>
+
+<br style="clear: both;">
+<br style="clear: both;">
+
+<table class="scores">
+    <tr>
+        <td>
+            <input class="score player1" type="text" style="width:2em; height: 2em; font-size:2em; text-align: center" value="0">
+        </td>
+        <td>
+            <input class="score player2" type="text" style="width:2em; height: 2em; font-size:2em; text-align: center" value="0">
+        </td>
+        <td>
+            <input class="score player3" type="text" style="width:2em; height: 2em; font-size:2em; text-align: center" value="0">
+        </td>
+        <td>
+            <input class="score player4" type="text" style="width:2em; height: 2em; font-size:2em; text-align: center" value="0">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button class="player1 reset" style="width:4em">0</button><br>
+        </td>
+        <td>
+            <button class="player2 reset" style="width:4em">0</button><br>
+        </td>
+        <td>
+            <button class="player3 reset" style="width:4em">0</button><br>
+        </td>
+        <td>
+            <button class="player4 reset" style="width:4em">0</button><br>
+        </td>
+    </tr>
+</table>
+
+<ol class="log">
+    <li><button class="reset">Reset</button></li>
+</ol>
+
+<script>
+    // class ScoreBoard {
+    //     constructor() {
+    //     }
+    //
+    //     /**
+    //      * @param delta
+    //      * @param fromConsole GameConsole
+    //      */
+    //     incrementScore(delta, fromConsole) {
+    //         const score =
+    //     }
+    // }
+    function getValue(target, prop) {
+        try {
+            return parseInt(target[prop].value);
+        } catch(e) {}
+        return 0;
+    }
+
+    function setValue(target, prop, val) {
+        let parsed = 0;
+        try {
+            parsed = parseInt(val);
+        } catch(e) {}
+        target[prop].value = parsed;
+    }
+
+    class GameConsole {
+        /**
+         * @param {LogBoard} log
+         * @param {number} playerNumber
+         */
+        constructor(log, playerNumber) {
+            this.log = log;
+            this.playerNumber = playerNumber;
+            this.$table = document.querySelector("table.console.player"+playerNumber);
+
+            this.$proposedScore = this.$table.querySelector("input.score");
+
+            this.$plus1 = this.$table.querySelector("button.plus1");
+            this.$plus1.onclick = this.plus1.bind(this);
+
+            this.$plus5 = this.$table.querySelector("button.plus5");
+            this.$plus5.onclick = this.plus5.bind(this);
+
+            this.$clear = this.$table.querySelector("button.clear");
+            this.$clear.onclick = this.clear.bind(this);
+            this.$clear.ondblclick = this.claim.bind(this);
+
+            this.$commit = this.$table.querySelector("button.commit");
+            this.$commit.onclick = this.commit.bind(this);
+
+
+            this.$score = document.querySelector("table.scores input.score.player"+playerNumber);
+            this.$scoreReset = document.querySelector("table.scores button.reset.player"+playerNumber);
+
+            this.$scoreReset.onclick = () => {
+                this.scoreBoard.reset(this);
+            };
+
+            this.reset();
+        }
+
+        setActive(isActive) {
+            if (isActive) {
+                this.$table.classList.add("active");
+            } else {
+                this.$table.classList.remove("active");
+            }
+        }
+
+        claim() {
+            this.scoreBoard.claimConsole(this);
+        }
+
+        /**
+         * @param {ScoreBoard} board
+         */
+        setScoreboard(board) {
+            this.scoreBoard = board;
+        }
+        plus1() {
+            this.setProposedScore( this.getProposedScore() + 1 );
+        }
+        plus5() {
+            this.setProposedScore( this.getProposedScore() + 5 );
+        }
+        clear() {
+            this.setProposedScore( 0 );
+        }
+        commit() {
+            this.scoreBoard.addScore(this, this.getProposedScore());
+            this.scoreBoard.advancePlayer(this);
+            this.reset();
+        }
+
+        getProposedScore() {
+            return getValue(this, "$proposedScore");
+        }
+        setProposedScore(val) {
+            return setValue(this, "$proposedScore", val);
+        }
+        reset() {
+            this.setProposedScore(0);
+            this.setActive(false);
+        }
+    }
+
+    class ScoreBoard {
+        /**
+         * @param {LogBoard} log
+         * @param {GameConsole[]} consoles
+         */
+        constructor(log, consoles) {
+            this.log = log;
+            this.consoles = consoles;
+            for(let console of consoles) {
+                console.setScoreboard(this);
+            }
+            this.activeConsole = this.consoles[0];
+        }
+
+        claimConsole(console) {
+            this.activeConsole.setActive(false);
+            this.activeConsole = console;
+            this.activeConsole.setActive(true);
+            this.log.add(`Claimed`, this.activeConsole.playerNumber);
+        }
+
+        /**
+         * @param {GameConsole} console
+         * @param {number} score
+         */
+        setScore(console, score) {
+            setValue(console, "$score", score);
+        }
+
+        /**
+         * @param {GameConsole} console
+         * @returns {number}
+         */
+        getScore(console) {
+            return getValue(console, "$score");
+        }
+
+        /**
+         * @param {GameConsole} console
+         * @param {number} delta
+         */
+        addScore(console, delta) {
+            const prev = this.getScore(console);
+            const result = prev + delta;
+            this.setScore(console,  result);
+            this.log.add(`${prev} + ${delta} = ${result}`, this.activeConsole.playerNumber);
+        }
+
+        reset(console) {
+            const prev = this.getScore(console);
+            this.setScore(console,  0);
+            this.log.add(`${prev} => ${0}`, console.playerNumber);
+        }
+
+        /**
+         * @param {GameConsole|undefined} consoleSayingAdvance
+         */
+        advancePlayer(consoleSayingAdvance) {
+            const current = this.consoles.lastIndexOf(consoleSayingAdvance);
+            const next = current + 1 >= this.consoles.length ? 0 : current + 1;
+            this.activeConsole.setActive(false);
+            this.activeConsole = this.consoles[next];
+            this.activeConsole.setActive(true);
+        }
+    }
+
+    class LogBoard {
+        constructor() {
+            this.$ul = document.querySelector("ol.log");
+            this.$ul.querySelector("button.reset").onclick = this.reset.bind(this);
+        }
+        add(entry, playerNumber) {
+            const li = document.createElement("li");
+            if (playerNumber && playerNumber >= 0) {
+                li.classList.add(`player${playerNumber}`);
+            }
+            li.innerHTML = `<small>${this.getCurrentTime()}</small>&nbsp;&nbsp; ${entry}`;
+            this.$ul.appendChild(li);
+        }
+        reset() {
+            const uls = this.$ul.querySelectorAll("li");
+            for(let i=1; i < uls.length; ++i) {
+                uls[i].remove();
+            }
+            this.add("Reset")
+        }
+        getCurrentTime() {
+            let now = new Date();
+            let hours = String(now.getHours()).padStart(2, '0');
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            let seconds = String(now.getSeconds()).padStart(2, '0');
+            return `${hours}:${minutes}:${seconds}`;
+        }
+    }
+
+    const log = new LogBoard();
+    log.add("Started game");
+
+    const player1 = new GameConsole(log, 1);
+    const player2 = new GameConsole(log, 2);
+    const player3 = new GameConsole(log, 3);
+    const player4 = new GameConsole(log, 4);
+
+    const board = new ScoreBoard(log, [
+        player1, player2, player3, player4
+    ]);
+    board.advancePlayer(null);
+</script>
+
+
+
+
+
+</body>
+</html>
