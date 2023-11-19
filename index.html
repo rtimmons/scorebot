@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<!--
-browser-sync start --server --files "*.html, *.css"
--->
 <html lang="en">
 <head><title>Game</title>
 <style>
@@ -12,7 +9,7 @@ browser-sync start --server --files "*.html, *.css"
         background-color: #efe;
     }
     table.console:not(.active) button {
-        background-color: #000;
+        color: white;
     }
     table.console {
         border-width: 3px;
@@ -97,7 +94,6 @@ browser-sync start --server --files "*.html, *.css"
             <span class="active">T</span><br>
             <button class="commit" style="width:3em">OK</button><br>
         </td>
-        </td>
     </tr>
 </table>
 
@@ -140,18 +136,6 @@ browser-sync start --server --files "*.html, *.css"
 </ol>
 
 <script>
-    // class ScoreBoard {
-    //     constructor() {
-    //     }
-    //
-    //     /**
-    //      * @param delta
-    //      * @param fromConsole GameConsole
-    //      */
-    //     incrementScore(delta, fromConsole) {
-    //         const score =
-    //     }
-    // }
     function getValue(target, prop) {
         try {
             return parseInt(target[prop].value);
@@ -263,6 +247,9 @@ browser-sync start --server --files "*.html, *.css"
         }
 
         claimConsole(console) {
+            if ( this.activeConsole == console ) {
+                return;
+            }
             this.activeConsole.setActive(false);
             this.activeConsole = console;
             this.activeConsole.setActive(true);
@@ -290,10 +277,13 @@ browser-sync start --server --files "*.html, *.css"
          * @param {number} delta
          */
         addScore(console, delta) {
+            if (delta <= 0 && console !== this.activeConsole) {
+                return;
+            }
             const prev = this.getScore(console);
             const result = prev + delta;
             this.setScore(console,  result);
-            this.log.add(`${prev} + ${delta} = ${result}`, this.activeConsole.playerNumber);
+            this.log.add(`${prev} + ${delta} = ${result}`, console.playerNumber);
         }
 
         reset(console) {
@@ -343,23 +333,24 @@ browser-sync start --server --files "*.html, *.css"
         }
     }
 
-    const log = new LogBoard();
-    log.add("Started game");
 
-    const player1 = new GameConsole(log, 1);
-    const player2 = new GameConsole(log, 2);
-    const player3 = new GameConsole(log, 3);
-    const player4 = new GameConsole(log, 4);
+    function main() {
+        const log = new LogBoard();
+        log.add("Started game");
 
-    const board = new ScoreBoard(log, [
-        player1, player2, player3, player4
-    ]);
-    board.advancePlayer(null);
+        const player1 = new GameConsole(log, 1);
+        const player2 = new GameConsole(log, 2);
+        const player3 = new GameConsole(log, 3);
+        const player4 = new GameConsole(log, 4);
+
+        const board = new ScoreBoard(log, [
+            player1, player2, player3, player4
+        ]);
+        board.advancePlayer(null);
+    }
+
+    main();
 </script>
-
-
-
-
 
 </body>
 </html>
