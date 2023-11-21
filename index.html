@@ -183,6 +183,9 @@
 
             this.$proposedScore = this.$table.querySelector("input.score");
 
+            this.$minus1 = this.$table.querySelector("button.minus1");
+            this.$minus1.onclick = this.minus1.bind(this);
+
             this.$plus1 = this.$table.querySelector("button.plus1");
             this.$plus1.onclick = this.plus1.bind(this);
 
@@ -225,11 +228,17 @@
         setScoreboard(board) {
             this.scoreBoard = board;
         }
+        scoreDelta(delta) {
+            this.setProposedScore( this.getProposedScore() + delta );
+        }
         plus1() {
-            this.setProposedScore( this.getProposedScore() + 1 );
+            this.scoreDelta(1);
+        }
+        minus1() {
+            this.scoreDelta(-1);
         }
         plus5() {
-            this.setProposedScore( this.getProposedScore() + 5 );
+            this.scoreDelta(5);
         }
         clear() {
             this.setProposedScore( 0 );
@@ -267,7 +276,7 @@
         }
 
         claimConsole(console) {
-            if ( this.activeConsole == console ) {
+            if ( this.activeConsole === console ) {
                 return;
             }
             this.activeConsole.setActive(false);
@@ -297,7 +306,7 @@
          * @param {number} delta
          */
         addScore(console, delta) {
-            if (delta <= 0 && console !== this.activeConsole) {
+            if (delta === 0 && console !== this.activeConsole) {
                 return;
             }
             const prev = this.getScore(console);
@@ -316,6 +325,10 @@
          * @param {GameConsole|undefined} consoleSayingAdvance
          */
         advancePlayer(consoleSayingAdvance) {
+            if(this.activeConsole && consoleSayingAdvance && consoleSayingAdvance !== this.activeConsole) {
+                this.log.add("Out of turn adjustment", consoleSayingAdvance.playerNumber);
+                return;
+            }
             const current = this.consoles.lastIndexOf(consoleSayingAdvance);
             const next = current + 1 >= this.consoles.length ? 0 : current + 1;
             this.activeConsole.setActive(false);
