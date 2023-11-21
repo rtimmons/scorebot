@@ -5,16 +5,33 @@
     div.game {
         font-family: courier, monospace;
     }
+    table.console button {
+        width: 3em;
+    }
     table.console.active button {
         /*background-color: #efe;*/
     }
     table.console:not(.active) button {
         opacity: 20%;
     }
+    table.console button.minus1 {
+        margin-bottom: 1em;
+    }
+    table.console button.commit {
+        margin-top: 1em;
+    }
+
+    input.score {
+        width:2em;
+        height: 4em;
+        font-size:2em;
+        text-align: center
+    }
     table.console {
         border-width: 3px;
         float: left;
         margin: 0.5em;
+        text-align: center;
     }
     .player1 {
         color: #C00;
@@ -41,14 +58,14 @@
 <table border="1" class="console player1">
     <tr>
         <td>
-            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+            <input type="text" class="score" value="0">
         </td>
-        <td style="text-align: center">
-            <button class="plus1" style="width:3em">+1</button><br>
-            <button class="plus5" style="width:3em">+5</button><br>
-            <button class="clear" style="width:3em">0</button><br>
-            <br>
-            <button class="commit" style="width:3em">OK</button><br>
+        <td>
+            <button class="minus1">-1</button><br>
+            <button class="plus1">+1</button><br>
+            <button class="plus5">+5</button><br>
+            <button class="clear">0</button><br>
+            <button class="commit">OK</button><br>
         </td>
     </tr>
 </table>
@@ -56,14 +73,14 @@
 <table border="1" class="console player2">
     <tr>
         <td>
-            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+            <input type="text" class="score" value="0">
         </td>
-        <td style="text-align: center">
-            <button class="plus1" style="width:3em">+1</button><br>
-            <button class="plus5" style="width:3em">+5</button><br>
-            <button class="clear" style="width:3em">0</button><br>
-            <br>
-            <button class="commit" style="width:3em">OK</button><br>
+        <td>
+            <button class="minus1">-1</button><br>
+            <button class="plus1">+1</button><br>
+            <button class="plus5">+5</button><br>
+            <button class="clear">0</button><br>
+            <button class="commit">OK</button><br>
         </td>
     </tr>
 </table>
@@ -71,14 +88,14 @@
 <table border="1" class="console player3">
     <tr>
         <td>
-            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+            <input type="text" class="score" value="0">
         </td>
-        <td style="text-align: center">
-            <button class="plus1" style="width:3em">+1</button><br>
-            <button class="plus5" style="width:3em">+5</button><br>
-            <button class="clear" style="width:3em">0</button><br>
-            <br>
-            <button class="commit" style="width:3em">OK</button><br>
+        <td>
+            <button class="minus1">-1</button><br>
+            <button class="plus1">+1</button><br>
+            <button class="plus5">+5</button><br>
+            <button class="clear">0</button><br>
+            <button class="commit">OK</button><br>
         </td>
     </tr>
 </table>
@@ -86,14 +103,14 @@
 <table border="1" class="console player4">
     <tr>
         <td>
-            <input type="text" style="width:2em; height: 3em; font-family: courier; font-size:2em; text-align: center" class="score" value="0">
+            <input type="text" class="score" value="0">
         </td>
-        <td style="text-align: center">
-            <button class="plus1" style="width:3em">+1</button><br>
-            <button class="plus5" style="width:3em">+5</button><br>
-            <button class="clear" style="width:3em">0</button><br>
-            <br>
-            <button class="commit" style="width:3em">OK</button><br>
+        <td>
+            <button class="minus1">-1</button><br>
+            <button class="plus1">+1</button><br>
+            <button class="plus5">+5</button><br>
+            <button class="clear">0</button><br>
+            <button class="commit">OK</button><br>
         </td>
     </tr>
 </table>
