@@ -1,5 +1,6 @@
 .PHONY: run
 run:
+	# If this fails, run:
 	# npm install -g browser-sync
 	browser-sync start --config bs-config.js
 
