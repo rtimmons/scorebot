@@ -2,14 +2,14 @@
 <html lang="en">
 <head><title>Game</title>
 <style>
-    * {
+    div.game {
         font-family: courier, monospace;
     }
     table.console.active button {
-        background-color: #efe;
+        /*background-color: #efe;*/
     }
     table.console:not(.active) button {
-        color: white;
+        opacity: 20%;
     }
     table.console {
         border-width: 3px;
@@ -37,6 +37,7 @@
 
 <body>
 
+<div class="game">
 <table border="1" class="console player1">
     <tr>
         <td>
@@ -46,7 +47,7 @@
             <button class="plus1" style="width:3em">+1</button><br>
             <button class="plus5" style="width:3em">+5</button><br>
             <button class="clear" style="width:3em">0</button><br>
-            <span class="active">T</span><br>
+            <br>
             <button class="commit" style="width:3em">OK</button><br>
         </td>
     </tr>
@@ -61,7 +62,7 @@
             <button class="plus1" style="width:3em">+1</button><br>
             <button class="plus5" style="width:3em">+5</button><br>
             <button class="clear" style="width:3em">0</button><br>
-            <span class="active">T</span><br>
+            <br>
             <button class="commit" style="width:3em">OK</button><br>
         </td>
     </tr>
@@ -76,7 +77,7 @@
             <button class="plus1" style="width:3em">+1</button><br>
             <button class="plus5" style="width:3em">+5</button><br>
             <button class="clear" style="width:3em">0</button><br>
-            <span class="active">T</span><br>
+            <br>
             <button class="commit" style="width:3em">OK</button><br>
         </td>
     </tr>
@@ -91,7 +92,7 @@
             <button class="plus1" style="width:3em">+1</button><br>
             <button class="plus5" style="width:3em">+5</button><br>
             <button class="clear" style="width:3em">0</button><br>
-            <span class="active">T</span><br>
+            <br>
             <button class="commit" style="width:3em">OK</button><br>
         </td>
     </tr>
@@ -134,6 +135,8 @@
 <ol class="log">
     <li><button class="reset">Reset</button></li>
 </ol>
+
+</div><!--class=game-->
 
 <script>
     function getValue(target, prop) {
